@@ -6,9 +6,23 @@
 		<style type="text/css"></style>
 		<script type="text/javascript" src="jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="raphael-min.js"></script>
+		<script type="text/javascript" src="DirectoryRenderer.js"></script>
 		
 		<script type="text/javascript">
 		$("document").ready(function() {
+
+			// $(window).resize(function(event) {
+			// 	$("#holder")
+			// });
+
+			//Initialize Raphael here...
+			var context = new Raphael($("#holder"),500,$("#holder").outerWidth());
+			//NewDirectory Renderer
+			var dr = new Renderer($("#holder").outerWidth(),400,context);
+
+			dr.createFolderIcon($("#holder").position().left+20,$("#holder").position().top+20,"someDummyText");
+
+			dr.createFolderIcon(100,100,"someDummyText");
 
 
 		});

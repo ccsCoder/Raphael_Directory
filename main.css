@@ -10,6 +10,7 @@ body {
 	border: none;
 	max-width: 97%;
 	max-height: 97%;
+	height:500px;
 	overflow: none;
 	border-top: gray 1px solid;
 	border-bottom: gray 1px solid;
