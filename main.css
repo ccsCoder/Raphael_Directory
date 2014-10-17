@@ -1,0 +1,16 @@
+body {
+	background-color: black;
+	color: #5492ED;
+	font-family: "Helvetica Neue"
+}
+
+#holder {
+	margin-left: auto;
+	margin-right: auto;
+	border: none;
+	max-width: 97%;
+	max-height: 97%;
+	overflow: none;
+	border-top: gray 1px solid;
+	border-bottom: gray 1px solid;
+}
