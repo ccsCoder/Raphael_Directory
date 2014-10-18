@@ -15,15 +15,35 @@
 			// 	$("#holder")
 			// });
 
+			var top = $("#holder").position().top;
+			var left =$("#holder").position().left;
+			var vOffset = 20;
+			var hOffset =20;
+			var canvasWidth = $("#holder").outerWidth();
+			var canvasHeight = $("#holder").outerHeight();
+
+			top+=vOffset;
+			left+= hOffset;
+
 			//Initialize Raphael here...
-			var context = new Raphael($("#holder"),500,$("#holder").outerWidth());
-			//NewDirectory Renderer
-			var dr = new Renderer($("#holder").outerWidth(),400,context);
+			var context = Raphael("holder",canvasWidth,canvasHeight);
+			
+			var renderer = new Renderer(canvasWidth,canvasHeight,context);
 
-			dr.createFolderIcon($("#holder").position().left+20,$("#holder").position().top+20,"someDummyText");
+			//renderer.createFolderIcon(top,left,"DemoText");
 
-			dr.createFolderIcon(100,100,"someDummyText");
+			renderer.createFileIcon(top,left,"DemoText");
 
+			// var rect=context.rect(top,left,80,50).attr({fill:'',stroke:'aqua'});
+			
+			// rect.click(rect.animate({
+			// 	fill: 'green',
+			// 	width: 90,
+			// 	height: 70
+			// 	},	1500));
+
+			
+			
 
 		});
 		</script>
@@ -31,7 +51,6 @@
 	<body>
 		<h1>Hey there !</h1>
 		<div id="holder">
-						somewhere inside dude.
 		</div>
 	</body>
 
