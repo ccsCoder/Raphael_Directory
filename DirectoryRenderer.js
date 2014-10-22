@@ -26,7 +26,7 @@ function Renderer(mW,mH,ctx) {
 	//Offsets
 	this._horizontalGap = 60;
 	this._verticalGap = 70;
-//	console.log(this._maxWidth);
+
 };
 
 Renderer.prototype._setFolderLookAndFeel = function(folder) {
@@ -65,19 +65,13 @@ Renderer.prototype.layoutFilesAndFolders = function(startX, startY, fsobjects) {
 	
 	//Okay, the hard works starts.
 	for(var i=0;i<fsobjects.length;i++) {
-		// console.log(plotX+" --- "+this._maxWidth);
-		//console.log(plotX+" --- "+(this._maxWidth-this._iconWidth-this._horizontalGap));
-		//console.log((plotY+this._verticalGap+this._iconHeight)+" ----- "+this._maxHeight)
 		//check for width before plotting
 		if (plotX >= (this._maxWidth-this._iconWidth-this._horizontalGap)) {
 			
 			//the width has become greater than max-width
 			plotX = startX;	//reset plotX to start.
-			//console.log("******>>>> hit right end... ! at Item Number: "+i +" Reset plotX="+plotX);
-			//console.log("*******>>> "+((plotY+2*this._verticalGap+this._iconHeight))+" --- vs --- "+this._maxHeight);
 			//now see if the next row can fit within the current height.
 			if( (plotY+2*this._verticalGap+this._iconHeight) > this._maxHeight ) {
-				//console.log("I hit it!"+plotX+" , "+plotY);
 				//expand the container.
 				this._maxHeight=this._maxHeight+ this._iconHeight+ this._verticalGap;
 				this._context.setSize(this._maxWidth,this._maxHeight);
@@ -87,7 +81,6 @@ Renderer.prototype.layoutFilesAndFolders = function(startX, startY, fsobjects) {
 			//increment the plotY to point to the next Row.
 			plotY  = plotY + this._iconHeight + this._verticalGap;
 			
-			//console.log(""+this._context.height);			
 
 		}
 
@@ -132,7 +125,13 @@ Renderer.prototype._setFileLookAndFeel = function(file) {
 		});	
 	});
 
-}
+};
+
+Renderer.prototype._updateBreadCrumb = function(fileName) {
+	var navItem = document.createElement("span");
+	$(navItem).text(fileName+" > ").addClass('crumb').appendTo($("#breadcrumb"));
+	
+};
 
 Renderer.prototype.createFileIcon = function(x,y,fileName) {
 	//Create an Aggretation
@@ -166,7 +165,27 @@ Renderer.prototype.createFileIcon = function(x,y,fileName) {
 		/* Stuff to do when the mouse leaves the element */
 		fileIcon.animate({transform:'s1.0 1.0'}, this._animationDuration);
 	});	
-}
+
+	var that =this;
+
+	//add the "Click" handler
+	fileIcon.click(function(event) {
+		that._updateBreadCrumb(fileName);
+		that._doPuffOut(fileIcon);
+
+	});
+};
+
+Renderer.prototype._doPuffOut = function(targetElement) {
+	targetElement.animate({
+			transform: 's20.0 20.0',
+			opacity:0.1
+			},
+			300,function() {
+				targetElement.remove();
+	});
+	
+};
 
 Renderer.prototype.createFolderIcon = function(x,y,directoryName) {
 
@@ -201,8 +220,16 @@ Renderer.prototype.createFolderIcon = function(x,y,directoryName) {
 		folderIcon.animate({transform:'s1.0 1.0'}, this._animationDuration);
 	});	
 
+	var that = this;
 
+	//add the "Click" handler
+	folderIcon.click(function(event) {
+		that._updateBreadCrumb(directoryName);
+		that._doPuffOut(folderIcon);
 
+	});
+
+	
 
 }
 
